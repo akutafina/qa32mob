@@ -12,19 +12,25 @@ public class ApplicationManager {
     DesiredCapabilities capabilities;
 
     LoginHelper loginHelper;
+    private HeaderHelper headerHelper;
+    private MenuHelper menuHelper;
+    private ItemContainerHelper itemContainerHelper;
 
     public void init() throws MalformedURLException {
         capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformName","Android");
-        capabilities.setCapability("platformVersion","8.0.0");
-        capabilities.setCapability("deviceName","qa32mob");
-        capabilities.setCapability("appPackage","com.example.svetlana.scheduler");
-        capabilities.setCapability("appActivity",".presentation.splashScreen.SplashScreenActivity");
-        capabilities.setCapability("app", "/Users/akutafina/Documents/Tools/v.0.0.3.apk");
+        capabilities.setCapability("platformName", "Android");
+        capabilities.setCapability("platformVersion", "8.0.0");
+        capabilities.setCapability("deviceName", "qa32mob");
+        capabilities.setCapability("appPackage", "com.saucelabs.mydemoapp.rn");
+        capabilities.setCapability("appActivity", "com.saucelabs.mydemoapp.rn.MainActivity");
+        capabilities.setCapability("app", "/Users/akutafina/Documents/Tools/Demo244.apk");
 
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);
+        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
 
         loginHelper = new LoginHelper(driver);
+        headerHelper = new HeaderHelper(driver);
+        menuHelper = new MenuHelper(driver);
+        itemContainerHelper = new ItemContainerHelper(driver);
     }
 
     public void stop() {
@@ -32,6 +38,18 @@ public class ApplicationManager {
     }
 
     public LoginHelper getLoginHelper() {
-        return null;
+        return loginHelper;
+    }
+
+    public HeaderHelper getHeaderHelper() {
+        return headerHelper;
+    }
+
+    public MenuHelper getMenuHelper() {
+        return menuHelper;
+    }
+
+    public ItemContainerHelper getItemContainerHelper() {
+        return itemContainerHelper;
     }
 }

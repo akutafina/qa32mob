@@ -1,5 +1,6 @@
 package fw;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.concurrent.TimeUnit;
 
 public class BaseHelper {
+    public static final int EXPL_WAIT_SEC = 10;
     AppiumDriver driver;
 
     public BaseHelper(AppiumDriver driver) {
@@ -21,7 +23,7 @@ public class BaseHelper {
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-    protected void sleep(int seconds) {
+    public void sleep(int seconds) {
         //implicit wait
         driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
     }
@@ -31,10 +33,31 @@ public class BaseHelper {
     }
 
     public void tap(By locator) {
-        driver.findElement(locator);
+        driver.findElement(locator).click();
     }
 
-    public void type (By locator, String text){
+    public void type(By locator, String text) {
         driver.findElement(locator).sendKeys(text);
     }
+
+    public WebElement waitForElementToLoad(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, EXPL_WAIT_SEC);
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    public WebElement waitForElementToBeClickable(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, EXPL_WAIT_SEC);
+        return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    public void typeAndTapEnter(By locator, String text) {
+        type(locator, text);
+        driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
+    }
+
+    public boolean isElementPresent(By locator) {
+        return driver.findElements(locator).size() > 0;
+    }
+
+
 }
