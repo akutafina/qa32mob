@@ -15,6 +15,7 @@ public class ApplicationManager {
     private HeaderHelper headerHelper;
     private MenuHelper menuHelper;
     private ItemContainerHelper itemContainerHelper;
+    private ItemPageHelper itemPageHelper;
 
     public void init() throws MalformedURLException {
         capabilities = new DesiredCapabilities();
@@ -31,6 +32,7 @@ public class ApplicationManager {
         headerHelper = new HeaderHelper(driver);
         menuHelper = new MenuHelper(driver);
         itemContainerHelper = new ItemContainerHelper(driver);
+        itemPageHelper = new ItemPageHelper(driver);
     }
 
     public void stop() {
@@ -51,5 +53,9 @@ public class ApplicationManager {
 
     public ItemContainerHelper getItemContainerHelper() {
         return itemContainerHelper;
+    }
+
+    public ItemPageHelper getItemPageHelper() {
+        return itemPageHelper;
     }
 }
